@@ -9,6 +9,7 @@ PrintConfigDef::PrintConfigDef()
 {
     ConfigOptionDef external_fill_pattern;
     external_fill_pattern.type = coEnum;
+
     external_fill_pattern.enum_keys_map = ConfigOptionEnum<InfillPattern>::get_enum_values();
     external_fill_pattern.enum_values.push_back("rectilinear");
     external_fill_pattern.enum_values.push_back("concentric");
@@ -29,7 +30,6 @@ PrintConfigDef::PrintConfigDef()
     def->tooltip = "Optimize travel moves in order to minimize the crossing of perimeters. This is mostly useful with Bowden extruders which suffer from oozing. This feature slows down both the print and the G-code generation.";
     def->cli = "avoid-crossing-perimeters!";
     def->default_value = new ConfigOptionBool(false);
-
     def = this->add("bed_shape", coPoints);
     def->label = "Bed shape";
     {
@@ -39,6 +39,7 @@ PrintConfigDef::PrintConfigDef()
         opt->values.push_back(Pointf(200,200));
         opt->values.push_back(Pointf(0,200));
         def->default_value = opt;
+        
     }
     def = this->add("has_heatbed", coBool);
     def->label = "Has heated bed";
@@ -72,6 +73,7 @@ PrintConfigDef::PrintConfigDef()
     def->full_width = true;
     def->height = 120;
     def->default_value = new ConfigOptionString("");
+    
 
     def = this->add("bottom_infill_pattern", external_fill_pattern);
     def->label = "Bottom";
@@ -81,8 +83,7 @@ PrintConfigDef::PrintConfigDef()
     def->cli = "bottom-infill-pattern=s";
     def->default_value = new ConfigOptionEnum<InfillPattern>(ipRectilinear);
 
-    def = this->add("bottom_solid_layers", coInt);
-    def->label = "Bottom";
+    def = this->add("bottom_solid_layers", coInt);    def->label = "Bottom";
     def->category = "Layers and Perimeters";
     def->tooltip = "Number of solid layers to generate on bottom surfaces.";
     def->cli = "bottom-solid-layers=i";
@@ -113,6 +114,14 @@ PrintConfigDef::PrintConfigDef()
     def->category = "Advanced";
     def->tooltip = "This factor affects the amount of plastic for bridging. You can decrease it slightly to pull the extrudates and prevent sagging, although default settings are usually good and you should experiment with cooling (use a fan) before tweaking this.";
     def->cli = "bridge-flow-ratio=f";
+    def->min = 0;
+    def->default_value = new ConfigOptionFloat(1);
+    
+    def = this->add("bridge_spacing", coFloat);
+    def->label = "Bridge spacing";
+    def->category = "Advanced";
+    def->tooltip = "Zmienia odległość pomiędzy liniami mostu";
+    def->cli = "bridge_spacing=f";
     def->min = 0;
     def->default_value = new ConfigOptionFloat(1);
 
