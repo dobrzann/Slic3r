@@ -1836,7 +1836,7 @@ sub prepare_send {
         }
     }
 
-    $self->{send_gcode_file_print} = $Slic3r::GUI::Settings->{octoprint}{start};
+(    $self->{send_gcode_file_print} = $Slic3r::GUI::Settings->{octoprint}{start};
     $self->{send_gcode_file} = $self->export_gcode(Wx::StandardPaths::Get->GetTempDir() . "/" . $filename);
 }
 
@@ -1867,7 +1867,7 @@ sub send_gcode {
         }else{
             # slurp the file we would send into a string - should be someplace to reference this but could not find it?
             local $/=undef;
-            open my $gch,$path;
+            open my ($gch),$path;
             my $gcode=<$gch>;
             close($gch);
 
