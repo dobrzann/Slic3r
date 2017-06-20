@@ -1818,8 +1818,8 @@ sub prepare_send {
             }
         }
         $progress->Destroy;
-        if ($res->is_success) {
-            my $searchterm = ($self->{config}->host_type eq 'octoprint') ? '/"name":\s*"\Q$filename\E"/' : '"'.$filename.'"';            
+        if ($res->is_success) {            
+	my $searchterm = ($self->{config}->host_type eq 'octoprint') ? '/"name":\s*"\Q$filename\E"/' : '"'.$filename.'"';            
             if ($res->decoded_content =~ $searchterm) {
                 my $dialog = Wx::MessageDialog->new($self,
                     "It looks like a file with the same name already exists in the server. "
@@ -1836,7 +1836,7 @@ sub prepare_send {
         }
     }
 
-(    $self->{send_gcode_file_print} = $Slic3r::GUI::Settings->{octoprint}{start};
+    $self->{send_gcode_file_print} = $Slic3r::GUI::Settings->{octoprint}{start};
     $self->{send_gcode_file} = $self->export_gcode(Wx::StandardPaths::Get->GetTempDir() . "/" . $filename);
 }
 
